@@ -3,7 +3,7 @@ const fs = require('fs');
 const shell = require('shelljs');
 const sep = require('path').sep;
 
-function fromDir(startPath: string, filter: string) {
+function fromDir(startPath, filter) {
   console.log('Starting from dir ' + startPath + sep);
   if (!fs.existsSync(startPath)) {
     return;
