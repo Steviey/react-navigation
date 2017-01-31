@@ -3,7 +3,7 @@ const join = require('path').join;
 const sep = require('path').sep;
 
 const files = [];
-function crawl(location: string) {
+function crawl(location) {
   const dir = fs.readdirSync(location);
   dir.map(function(name, index) {
     const stat = fs.statSync(join(location, name));
