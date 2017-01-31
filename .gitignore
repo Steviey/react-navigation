@@ -20,3 +20,6 @@ yarn-error.log
 
 # GitHub Web
 _config.yml
+
+# Jest
+coverage
