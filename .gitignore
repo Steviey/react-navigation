@@ -16,10 +16,7 @@ yarn-error.log
 .DS_Store
 
 # Exponent
-.exponent
-
-# GitHub Web
-_config.yml
+.Exponent
 
 # Jest
 coverage
