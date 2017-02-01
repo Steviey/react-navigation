@@ -1,5 +1,5 @@
 ## Note: 
-This fork is probably only necessary, if you want to install React-Navigation on non-Unix based systems, standalone and test the examples. Usually the library is included via imports into main apps, which causes no problems on other OS's.
+This fork is probably only necessary, if you want to install React-Navigation on non-Unix/Mac based systems, standalone and test the examples. Usually the library is included via imports into main apps, which causes no problems on other OS's.
 
 The branch 'stevieBranch' will be frequently updated.
 
