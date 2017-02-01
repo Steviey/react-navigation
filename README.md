@@ -1,4 +1,5 @@
-Note: This fork is probably only necessary, if you want to install React-Navigation on Non-Unix based systems, standalone and test the examples. Normally the library is included via imports in main apps.
+## Note: 
+This fork is probably only necessary, if you want to install React-Navigation on Non-Unix based systems, standalone and test the examples. Usually the library is included via imports in main apps, which causes no problems on other OS's.
 
 ![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
 
