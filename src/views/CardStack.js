@@ -14,6 +14,7 @@ import CardStackStyleInterpolator from './CardStackStyleInterpolator';
 import CardStackPanResponder from './CardStackPanResponder';
 import Header from './Header';
 import NavigationPropTypes from '../PropTypes';
+import NavigationActions from '../NavigationActions';
 import addNavigationHelpers from '../addNavigationHelpers';
 import SceneView from './SceneView';
 
@@ -21,6 +22,7 @@ import type {
   NavigationAction,
   NavigationScreenProp,
   NavigationState,
+  NavigationScene,
   NavigationRoute,
   NavigationSceneRenderer,
   NavigationSceneRendererProps,
@@ -119,8 +121,8 @@ class CardStack extends React.Component<DefaultProps, Props, void> {
 
     /**
      * The navigation prop, including the state and the dispatcher for the back
-     * action. The dispatcher must handle the back action ({type: 'Back'}), and
-     * the navigation state has this shape:
+     * action. The dispatcher must handle the back action
+     * ({ type: NavigationActions.BACK }), and the navigation state has this shape:
      *
      * ```js
      * const navigationState = {
@@ -158,7 +160,7 @@ class CardStack extends React.Component<DefaultProps, Props, void> {
     return (
       <Transitioner
         configureTransition={this._configureTransition}
-        navigationState={this.props.navigation.state}
+        navigation={this.props.navigation}
         render={this._render}
         style={this.props.style}
       />
@@ -191,49 +193,40 @@ class CardStack extends React.Component<DefaultProps, Props, void> {
     return transitionSpec;
   }
 
-  _renderHeader(props: NavigationTransitionProps, headerMode: HeaderMode): ?React.Element<*> {
-    const navigation = this._getChildNavigation(props.scene);
-    const header = this.props.router.getScreenConfig(navigation, 'header') || {};
+  _renderHeader(
+    transitionProps: NavigationTransitionProps,
+    headerMode: HeaderMode
+  ): ?React.Element<*> {
+    const headerConfig = this.props.router.getScreenConfig(
+      transitionProps.navigation,
+      'header'
+    ) || {};
 
     return (
       <this.props.headerComponent
-        {...props}
-        style={header.style}
+        {...transitionProps}
+        router={this.props.router}
+        style={headerConfig.style}
         mode={headerMode}
         onNavigateBack={() => this.props.navigation.goBack(null)}
-        renderLeftComponent={(props) => {
-          const navigation = this._getChildNavigation(props.scene);
-          const header = this.props.router.getScreenConfig(navigation, 'header');
-          if (header && header.left) {
-            return header.left;
-          }
-          const { renderLeftComponent } = this.props.headerComponent.defaultProps || {};
-          if (typeof renderLeftComponent === 'function') {
-            return renderLeftComponent(props);
-          }
-          return null;
+        renderLeftComponent={(props: NavigationTransitionProps) => {
+          const header = this.props.router.getScreenConfig(props.navigation, 'header') || {};
+          return header.left;
         }}
-        renderRightComponent={({ scene }) => {
-          const navigation = this._getChildNavigation(scene);
-          const header = this.props.router.getScreenConfig(navigation, 'header');
-          if (header && header.right) {
-            return header.right;
-          }
-          return null;
+        renderRightComponent={(props: NavigationTransitionProps) => {
+          const header = this.props.router.getScreenConfig(props.navigation, 'header') || {};
+          return header.right;
         }}
-        renderTitleComponent={({ scene }) => {
-          const navigation = this._getChildNavigation(scene);
-          const header = this.props.router.getScreenConfig(navigation, 'header');
-          let title = null;
-          if (header && header.title) {
-            title = header.title;
-          } else {
-            title = this.props.router.getScreenConfig(navigation, 'title');
+        renderTitleComponent={(props: NavigationTransitionProps) => {
+          const header = this.props.router.getScreenConfig(props.navigation, 'header') || {};
+          // When we return 'undefined' from 'renderXComponent', header treats them as not
+          // specified and default 'renderXComponent' functions are used. In case of 'title',
+          // we return 'undefined' in case of 'string' too because the default 'renderTitle'
+          // function in header handles them.
+          if (typeof header.title === 'string') {
+            return undefined;
           }
-          if (typeof title === 'string') {
-            return <Header.Title>{title}</Header.Title>;
-          }
-          return title;
+          return header.title;
         }}
       />
     );
@@ -254,6 +247,7 @@ class CardStack extends React.Component<DefaultProps, Props, void> {
             scene => this._renderScene({
               ...props,
               scene,
+              navigation: this._getChildNavigation(scene),
             })
           )}
         </View>
@@ -297,8 +291,7 @@ class CardStack extends React.Component<DefaultProps, Props, void> {
     Component: ReactClass<*>,
     props: NavigationSceneRendererProps,
   ): React.Element<*> {
-    const navigation = this._getChildNavigation(props.scene);
-    const header = this.props.router.getScreenConfig(navigation, 'header');
+    const header = this.props.router.getScreenConfig(props.navigation, 'header');
     const headerMode = this._getHeaderMode();
     if (headerMode === 'screen') {
       const isHeaderHidden = header && header.visible === false;
@@ -309,7 +302,7 @@ class CardStack extends React.Component<DefaultProps, Props, void> {
           {maybeHeader}
           <SceneView
             screenProps={this.props.screenProps}
-            navigation={navigation}
+            navigation={props.navigation}
             component={Component}
           />
         </View>
@@ -318,7 +311,7 @@ class CardStack extends React.Component<DefaultProps, Props, void> {
     return (
       <SceneView
         screenProps={this.props.screenProps}
-        navigation={navigation}
+        navigation={props.navigation}
         component={Component}
       />
     );
@@ -346,7 +339,7 @@ class CardStack extends React.Component<DefaultProps, Props, void> {
     if (this.props.gesturesEnabled) {
       let onNavigateBack = null;
       if (this.props.navigation.state.index !== 0) {
-        onNavigateBack = () => this.props.navigation.dispatch({ type: 'Back', key: props.scene.route.key });
+        onNavigateBack = () => this.props.navigation.dispatch(NavigationActions.back({ key: props.scene.route.key }));
       }
       const panHandlersProps = {
         ...props,
