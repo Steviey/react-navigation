@@ -1,3 +1,5 @@
+Note: This fork is probably only necessary, if you want to install React-Navigation on Non-Unix based systems, standalone and test the examples. Normally the library is included via imports in main apps.
+
 ![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
 
 # React Navigation [![CircleCI](https://circleci.com/gh/react-community/react-navigation/tree/master.svg?style=shield&circle-token=622fcb1d78413084c2f44699ed2104246a177485)](https://circleci.com/gh/react-community/react-navigation/tree/master) [![npm version](https://badge.fury.io/js/react-navigation.svg)](https://badge.fury.io/js/react-navigation)
