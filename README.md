@@ -4,9 +4,13 @@ This fork is probably only necessary, if you want to install React-Navigation on
 The branch 'stevieyBranch' will be frequently updated/merged.
 
 Install:
+
 1. Project root: npm i
+
 2. cd examples\NavigationPlayground
+
 3. npm i
+
 4. react-native run-android
 
 ![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
