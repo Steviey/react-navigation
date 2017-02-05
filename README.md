@@ -3,7 +3,7 @@ This fork is probably only necessary, if you want to install React-Navigation on
 
 The branch 'stevieyBranch' will be frequently updated/merged.
 
-## Install:
+## Install (standalone):
 
 1. project root: npm i
 
@@ -21,7 +21,7 @@ The branch 'stevieyBranch' will be frequently updated/merged.
 
 Browse the docs on [reactnavigation.org](https://reactnavigation.org/).
 
-## [Getting started](https://reactnavigation.org/docs/intro/)
+## [Getting started](https://reactnavigation.org/docs/intro/) (non-standalone)
 
 1. Create a new React Native App
   ```
