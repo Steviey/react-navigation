@@ -5,7 +5,7 @@ The branch 'stevieyBranch' will be frequently updated/merged.
 
 Install:
 
-1. Project root: npm i
+1. project root: npm i
 
 2. cd examples\NavigationPlayground
 
