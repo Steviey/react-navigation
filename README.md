@@ -3,7 +3,7 @@ This fork is probably only necessary, if you want to install React-Navigation on
 
 The branch 'stevieyBranch' will be frequently updated/merged.
 
-Install:
+## Install:
 
 1. project root: npm i
 
