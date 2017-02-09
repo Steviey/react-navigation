@@ -1,12 +1,13 @@
 {
   "name": "react-navigation",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "description": "React Navigation",
   "main": "src/react-navigation.js",
   "sources": {
     "react-native-v1": "lib-rn/react-navigation.js",
     "web": "lib/react-navigation.web.js"
   },
+  "module": "lib/react-navigation.web.js",
   "webpack": "lib/react-navigation.web.js",
   "repository": {
     "url": "git@github.com:react-community/react-navigation.git",
@@ -76,7 +77,7 @@
     "hoist-non-react-statics": "^1.2.0",
     "path-to-regexp": "^1.7.0",
     "react-native-drawer-layout": "^1.1.0",
-    "react-native-tab-view": "^0.0.54"
+    "react-native-tab-view": "^0.0.55"
   },
   "jest": {
     "notify": true,
